@@ -24,6 +24,11 @@
                         {{ __('A new verification link has been sent to the email address you provided during registration.') }}
                     </div>
                 @endif
+                @if (session('status') == 'verification-token-expired')
+                    <div class="alert alert-danger">
+                        Token is expired.
+                    </div>
+                @endif
 
                 <div class="mt-4 flex items-center">
                     <form method="POST" action="{{ route('merchants.verification.send') }}">

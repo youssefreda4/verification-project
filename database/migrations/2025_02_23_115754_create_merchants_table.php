@@ -18,6 +18,9 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            //for CVT Verification [verification_token,verification_token_till]
+            $table->string('verification_token')->nullable();
+            $table->timestamp('verification_token_till')->nullable();
             $table->timestamps();
         });
     }

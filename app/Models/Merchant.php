@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use App\Notifications\MerchantEmailVerification;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\MerchantEmailVerification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -17,16 +18,27 @@ class Merchant extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification()
     {
-        $url = URL::temporarySignedRoute(
-            'merchants.verification.verify',
-            now()->addMinutes(30),
-            [
-                'id' => $this->getKey(),
-                'hash' => sha1($this->getEmailForVerification()),
-            ]
-        );
+        if (config('verification.way') == 'email') {
+            $url = URL::temporarySignedRoute(
+                'merchants.verification.verify',
+                now()->addMinutes(30),
+                [
+                    'id' => $this->getKey(),
+                    'hash' => sha1($this->getEmailForVerification()),
+                ]
+            );
+            $this->notify(new MerchantEmailVerification($url));
+        }
 
-        $this->notify(new MerchantEmailVerification($url));
+        if (config('verification.way') == 'cvt') {
+            $this->generateVerficationToken();
+            $url = route('merchants.verification.verify', [
+                'id' =>  $this->getKey(),
+                'token' => $this->verification_token,
+            ]);
+
+            $this->notify(new MerchantEmailVerification($url));
+        }
     }
 
     /**
@@ -38,6 +50,8 @@ class Merchant extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'verification_token',
+        'verification_token_till',
     ];
 
     /**
@@ -61,5 +75,26 @@ class Merchant extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+
+    //Custom Verification Token
+    public function generateVerficationToken()
+    {
+        if (config('verification.way') == 'cvt') {
+            $this->verification_token = Str::random(40);
+            $this->verification_token_till = now()->addMinutes(60);
+            $this->save();
+        }
+    }
+
+    public function verifyUsingVerficationToken()
+    {
+        if (config('verification.way') == 'cvt') {
+            $this->email_verified_at = now();
+            $this->verification_token = null;
+            $this->verification_token_till = null;
+            $this->save();
+        }
     }
 }
