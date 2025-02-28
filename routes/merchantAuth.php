@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomVerificationToken;
+use App\Http\Controllers\Merchant\Auth\PasswordLessAuthController;
 use App\Http\Controllers\MerchantAuth\PasswordController;
 use App\Http\Controllers\MerchantAuth\NewPasswordController;
 use App\Http\Controllers\MerchantAuth\VerifyEmailController;
@@ -21,7 +22,15 @@ Route::middleware('guest:merchant')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    if (config('verification.way') == 'passwordless') {
+        Route::post('login', [PasswordLessAuthController::class, 'store']);
+
+        Route::get('login-verify-email/{id}', [PasswordLessAuthController::class, 'verify'])
+            ->middleware(['signed', 'throttle:6,1'])
+            ->name('login.verify');
+    } else {
+        Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    }
 });
 
 Route::middleware(['merchant'])->group(function () {
@@ -50,6 +59,7 @@ Route::middleware(['merchant'])->group(function () {
             ->middleware('throttle:6,1')
             ->name('verification.send');
     }
+
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });

@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::prefix('merchant')->name('merchants.')->group(function () {
-    
+
     Route::middleware(['merchant', 'verified'])->group(function () {
         Route::view('/', 'merchant.pages.index')->name('index');
     });

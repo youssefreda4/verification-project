@@ -6,7 +6,8 @@ return [
     //'default' => Without any VERIFICATION
     //'email' => With email verification using signed URLs (register) 
     //'cvt' => With Custom Verification Token 
+    //'passwordless' => With passwordless Verification  (login)
 
-    'way' => 'cvt'
+    'way' => 'passwordless'
 
 ];
