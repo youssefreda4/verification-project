@@ -49,8 +49,8 @@ This project implements various **Verification Techniques** in a Laravel applica
    MAIL_FROM_ADDRESS=your_email@example.com
    
    TWILIO_SID=your_twilio_sid
-   TWILIO_AUTH_TOKEN=your_twilio_auth_token
-   TWILIO_PHONE_NUMBER=your_twilio_phone_number
+   TWILIO_TOKEN=your_twilio_auth_token
+   TWILIO_FROM_NUMBER=your_twilio_phone_number
    
    RECAPTCHA_SITE_KEY=your_google_recaptcha_site_key
    RECAPTCHA_SECRET_KEY=your_google_recaptcha_secret_key
