@@ -15,7 +15,7 @@ This project implements various **Verification Techniques** in a Laravel applica
 ### Prerequisites
 - PHP >= 8.2
 - Composer
-- Laravel 10+
+- Laravel 11+
 - Node.js & npm (for frontend assets)
 - Twilio account (for OTP verification)
 - Google reCAPTCHA API keys
