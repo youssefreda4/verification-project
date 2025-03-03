@@ -11,7 +11,6 @@ This project implements various **Verification Techniques** in a Laravel applica
 - **OTP (One-Time Password) using Twilio**
 - **Google reCAPTCHA (V2, V3)**
 
-## Installation
 ### Prerequisites
 - PHP >= 8.2
 - Composer
@@ -68,7 +67,7 @@ This project implements various **Verification Techniques** in a Laravel applica
    ```
 
 ## Usage
-- **Email Verification**: Laravel Breeze provides built-in email verification. Users will receive a verification email after registration.
+- **Email Verification**: Laravel Breeze provides built-in and customize it for merchant guard email verification. Users will receive a verification email after registration.
 - **Custom Token Verification (CVT)**: A unique token is generated and sent to the user's email for verification.
 - **Passwordless Authentication**: Users can log in using an email link instead of a password.
 - **OTP Verification using Twilio**: Users receive a one-time password (OTP) via SMS to authenticate.
