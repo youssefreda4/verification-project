@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\MerchantAuth;
 
-use App\Http\Controllers\Controller;
-use App\Models\Merchant;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Merchant;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Validation\ValidationException;
 
 class RegisteredUserController extends Controller
 {
@@ -30,9 +32,23 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => env('RECAPCHA_SECRET_KEY'),
+            'response' => $request->input('g-recaptcha-response'),
+        ]);
+
+        $recaptchaData = $response->json();
+
+        if ($recaptchaData['success'] == false) {
+            throw ValidationException::withMessages([
+                'g-recaptcha-response' => 'Invalid ReCAPTCHA',
+            ]);
+        }
+
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Merchant::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . Merchant::class],
             'password' => ['required',  Rules\Password::defaults()],
         ]);
 

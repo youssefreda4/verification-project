@@ -1,5 +1,15 @@
 @extends('merchant.auth.layouts.master')
+
+@push('header')
+    {{-- V2 --}}
+    {{-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> --}}
+
+    {{-- V3 --}}
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+@endpush
+
 @section('title', 'Register')
+
 @section('content')
     <!-- Register Card -->
     <div class="card">
@@ -16,15 +26,15 @@
                 @csrf
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="name"
-                        placeholder="Enter your name"  value="{{ old('name') }}" autofocus />
+                    <input type="text" class="form-control" id="username" name="name" placeholder="Enter your name"
+                        value="{{ old('name') }}" autofocus />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
 
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="text" class="form-control" id="email" name="email"
-                        placeholder="Enter your email"  value="{{ old('email') }}" />
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email"
+                        value="{{ old('email') }}" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
 
                 </div>
@@ -40,7 +50,15 @@
 
                 </div>
 
-                <button class="btn btn-primary d-grid w-100">Sign up</button>
+                {{-- <div class="g-recaptcha" data-sitekey="{{ env('RECAPCHA_SITE_KEY') }}"></div>
+                <x-input-error :messages="$errors->get('g-recaptcha-response')" class="mt-2" />
+                <br> --}}
+
+                {{-- <button class="btn btn-primary d-grid w-100">Sign up</button> --}}
+
+                {{-- V3 --}}
+                <button class="g-recaptcha  btn btn-primary d-grid w-100" data-sitekey="{{ env('RECAPCHA_SITE_KEY') }}"
+                    data-callback='onSubmit' data-action='submit'>Submit</button>
             </form>
 
             <p class="text-center">
@@ -53,3 +71,11 @@
     </div>
     <!-- Register Card -->
 @endsection
+
+@push('js')
+    <script>
+        function onSubmit(token) {
+            document.getElementById("formAuthentication").submit();
+        }
+    </script>
+@endpush

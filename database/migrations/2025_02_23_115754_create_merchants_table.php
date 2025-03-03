@@ -21,6 +21,10 @@ return new class extends Migration
             //for CVT Verification [verification_token,verification_token_till]
             $table->string('verification_token')->nullable();
             $table->timestamp('verification_token_till')->nullable();
+            //fieldes for otp
+            $table->string('phone')->unique()->nullable();
+            $table->string('otp')->unique()->nullable();
+            $table->timestamp('otp_till')->nullable();
             $table->timestamps();
         });
     }

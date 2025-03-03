@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomVerificationToken;
+use App\Http\Controllers\Merchant\Auth\OTPController;
 use App\Http\Controllers\Merchant\Auth\PasswordLessAuthController;
 use App\Http\Controllers\MerchantAuth\PasswordController;
 use App\Http\Controllers\MerchantAuth\NewPasswordController;
@@ -28,6 +29,14 @@ Route::middleware('guest:merchant')->group(function () {
         Route::get('login-verify-email/{id}', [PasswordLessAuthController::class, 'verify'])
             ->middleware(['signed', 'throttle:6,1'])
             ->name('login.verify');
+    } elseif (config('verification.way') == 'otp') {
+        Route::post('login', [OTPController::class, 'store']);
+
+        Route::get('/verify-otp/{email}', [OTPController::class, 'notice'])->name('verify.otp.notice');
+
+        Route::post('verify-otp', [OTPController::class, 'verify'])->name('verify.otp');
+
+        Route::post('resend-otp', [OTPController::class, 'resend'])->name('resend.otp');
     } else {
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
     }
