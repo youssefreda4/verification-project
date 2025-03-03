@@ -13,7 +13,7 @@ This project implements various **Verification Techniques** in a Laravel applica
 
 ## Installation
 ### Prerequisites
-- PHP >= 8.1
+- PHP >= 8.2
 - Composer
 - Laravel 10+
 - Node.js & npm (for frontend assets)
@@ -24,7 +24,6 @@ This project implements various **Verification Techniques** in a Laravel applica
 1. **Clone the repository**
    ```sh
    git clone https://github.com/your-username/your-repo.git](https://github.com/youssefreda4/verification-project.git
-   cd your-repo
    ```
 
 2. **Install dependencies**
