@@ -71,7 +71,7 @@ This project implements various **Verification Techniques** in a Laravel applica
 - **Custom Token Verification (CVT)**: A unique token is generated and sent to the user's email for verification.
 - **Passwordless Authentication**: Users can log in using an email link instead of a password.
 - **OTP Verification using Twilio**: Users receive a one-time password (OTP) via SMS to authenticate.
-- **Google reCAPTCHA**: Added to login and registration forms for spam protection.
+- **Google reCAPTCHA**: Added to registration forms for spam protection.
 
 ## License
 This project is open-source and available under the [MIT License](LICENSE).
