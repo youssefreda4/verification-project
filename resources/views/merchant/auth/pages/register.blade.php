@@ -50,14 +50,14 @@
 
                 </div>
 
-                {{-- <div class="g-recaptcha" data-sitekey="{{ env('RECAPCHA_SITE_KEY') }}"></div>
+                {{-- <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
                 <x-input-error :messages="$errors->get('g-recaptcha-response')" class="mt-2" />
                 <br> --}}
 
                 {{-- <button class="btn btn-primary d-grid w-100">Sign up</button> --}}
 
                 {{-- V3 --}}
-                <button class="g-recaptcha  btn btn-primary d-grid w-100" data-sitekey="{{ env('RECAPCHA_SITE_KEY') }}"
+                <button class="g-recaptcha  btn btn-primary d-grid w-100" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"
                     data-callback='onSubmit' data-action='submit'>Submit</button>
             </form>
 
