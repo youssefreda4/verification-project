@@ -17,6 +17,7 @@ This project implements various **Verification Techniques** in a Laravel applica
 - Composer
 - Laravel 11+
 - Node.js & npm (for frontend assets)
+- Mailtrap account (for Email verification)
 - Twilio account (for OTP verification)
 - Google reCAPTCHA API keys
 
