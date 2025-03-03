@@ -23,7 +23,7 @@ This project implements various **Verification Techniques** in a Laravel applica
 ### Setup
 1. **Clone the repository**
    ```sh
-   git clone https://github.com/your-username/your-repo.git
+   git clone https://github.com/your-username/your-repo.git](https://github.com/youssefreda4/verification-project.git
    cd your-repo
    ```
 
